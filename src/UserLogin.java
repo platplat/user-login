@@ -1,6 +1,6 @@
 import java.util.Scanner;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
@@ -8,7 +8,6 @@ import java.nio.charset.StandardCharsets;
 public class UserLogin {
     public static void main(String[] args) throws NoSuchAlgorithmException {
         Scanner sc = new Scanner(System.in);
-
         // Get user input
         System.out.print("Enter username: ");
         String usernameInput = sc.nextLine();
@@ -29,12 +28,15 @@ public class UserLogin {
 
     public static boolean isValidCredentials(String username, String password) throws NoSuchAlgorithmException {
         // Starting with hardcoded user details
-        Map<String,String> users = new HashMap<>();
-        users.put("user1",getHash("password123"));
-        users.put("user2", getHash("password321"));
-
+        List<User> users = new ArrayList<>();
+        users.add(new User("user1", getHash("password123")));
+        users.add(new User("user2", getHash("password321")));
+        
+        // Create a new User with the input username and password
+        User inputUser = new User(username, getHash(password));
+        
         // Check if username and password are valid credentials
-        if (users.containsKey(username) && users.get(username).equals(getHash(password))) {
+        if (users.contains(inputUser)) {
             return true;
         } else {
             return false;
