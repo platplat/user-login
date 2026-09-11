@@ -47,6 +47,8 @@ Through this project I aim to practice:
 src/
 └── (Java source files)
 
+.gitignore
+
 README.md
 ```
 
@@ -60,7 +62,7 @@ git clone https://github.com/platplat/user-login.git
 
 ```bash
 javac src/*.java
-java Main
+java UserLogin
 ```
 
 ## References
