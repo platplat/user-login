@@ -31,10 +31,10 @@ Through this project I aim to practice:
 ## Planned Steps
 
 ### Phase 1
-- [ ] User login functionality
-- [ ] User registration functionality
-- [ ] Password hashing
+- [X] User login functionality
+- [X] Password hashing
 - [ ] Persistent storage using files
+- [ ] User registration functionality
 
 ### Phase 2
 - [ ] Database integration
