@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 
 public class UserLogin {
     public static void main(String[] args) throws NoSuchAlgorithmException {
         Scanner sc = new Scanner(System.in);
+
         // Get user input
         System.out.print("Enter username: ");
         String usernameInput = sc.nextLine();
@@ -27,10 +29,9 @@ public class UserLogin {
 
 
     public static boolean isValidCredentials(String username, String password) throws NoSuchAlgorithmException {
-        // Starting with hardcoded user details
+        // Create list of users and load data from csv file
         List<User> users = new ArrayList<>();
-        users.add(new User("user1", getHash("password123")));
-        users.add(new User("user2", getHash("password321")));
+        users = readFromCsv("src/users.csv");
         
         // Create a new User with the input username and password
         User inputUser = new User(username, getHash(password));
@@ -64,5 +65,35 @@ public class UserLogin {
 
         // Convert StringBuilder object to a String and return
         return hexString.toString();
+    }
+
+
+    public static List<User> readFromCsv(String file) {
+        // Create empty list of users to return
+        List<User> users = new ArrayList<>();
+        
+        // Try catch block to manage exception
+        try (Scanner sc = new Scanner(Paths.get(file))) {
+            
+            // Check file has next line
+            while (sc.hasNextLine()) {
+                String user = sc.nextLine();
+
+                // if line is empty or incomplete, continue
+                if (user.equals("") || !(user.contains(",")) ) {
+                    continue;
+                }
+                // Extract username and hashed password and add new user to list
+                String[] userArray = user.split(",");
+                users.add(new User(userArray[0], userArray[1]));
+            }
+
+        } catch (Exception e) {
+            System.out.println("\nERROR: There was a problem reading the file.");
+            System.out.println(e);
+            return new ArrayList<>();
+        }
+
+        return users;
     }
 }
