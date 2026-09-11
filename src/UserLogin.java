@@ -4,10 +4,6 @@ public class UserLogin {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // Starting with hardcoded user details
-        String username = "user1";
-        String password = "password123";
-
         // Get user input
         System.out.print("Enter username: ");
         String usernameInput = sc.nextLine();
@@ -15,7 +11,7 @@ public class UserLogin {
         String passwordInput = sc.nextLine();
 
         // Login validation
-        if (username.equals(usernameInput) && password.equals(passwordInput)) {
+        if (isValidCredentials(usernameInput, passwordInput)) {
             System.out.println("Successfully logged in.");
         } else {
             System.out.println("Incorrect username/password.");
@@ -23,5 +19,18 @@ public class UserLogin {
 
         // Close scanner
         sc.close();
+    }
+
+    public static boolean isValidCredentials(String username, String password) {
+        // Starting with hardcoded user details
+        String username1 = "user1";
+        String password1 = "password123";
+
+        // Check if username and password are valid credentials
+        if (username.equals(username1) && password.equals(password1)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
