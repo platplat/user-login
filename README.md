@@ -44,12 +44,13 @@ Through this project I aim to practice:
 ## Project Structure
 
 ```
-src/
-└── (Java source files)
-
-.gitignore
-
-README.md
+.
+├── src
+│   ├── UserLogin.java
+│   ├── User.java
+│   └── users.csv
+├── .gitignore
+└── README.md
 ```
 
 ### Clone the Repository
