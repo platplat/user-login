@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.Map;
+import java.util.HashMap;
 
 public class UserLogin {
     public static void main(String[] args) {
@@ -23,11 +25,12 @@ public class UserLogin {
 
     public static boolean isValidCredentials(String username, String password) {
         // Starting with hardcoded user details
-        String username1 = "user1";
-        String password1 = "password123";
+        Map<String,String> users = new HashMap<>();
+        users.put("user1","password123");
+        users.put("user2", "password321");
 
         // Check if username and password are valid credentials
-        if (username.equals(username1) && password.equals(password1)) {
+        if (users.containsKey(username) && password.equals(users.get(username))) {
             return true;
         } else {
             return false;
