@@ -33,7 +33,7 @@ Through this project I aim to practice:
 ### Phase 1
 - [X] User login functionality
 - [X] Password hashing
-- [ ] Persistent storage using files
+- [X] Persistent storage using files
 - [ ] User registration functionality
 
 ### Phase 2
