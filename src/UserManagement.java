@@ -11,13 +11,10 @@ public class UserManagement {
     private List<User> users;
 
     public UserManagement(String file) {
-        if (file.endsWith("csv")) {
-            this.users = readFromJson(file);
-        } else if (file.endsWith("json")) {
-            this.users = readFromJson(file);
-        } else {
+        if ( !(file.endsWith("json")) ) {
             this.users = new ArrayList<>();
         }
+        this.users = readFromJson(file);
     }
 
     public List<User> getUsers() {
@@ -46,37 +43,7 @@ public class UserManagement {
     }
 
     // Static methods
-    public static List<User> readFromCsv(String file) {
-        // Create empty list of users to return
-        List<User> users = new ArrayList<>();
-        
-        // Try catch block to manage IOException exception
-        try (Scanner sc = new Scanner(Paths.get(file))) {
-            
-            // Check file has next line
-            while (sc.hasNextLine()) {
-                String user = sc.nextLine();
-
-                // if line is empty or incomplete, continue
-                if (user.equals("") || !(user.contains(",")) ) {
-                    continue;
-                }
-                // Extract username and hashed password and add new user to list
-                String[] userArray = user.split(",");
-                users.add(new User(userArray[0], userArray[1]));
-            }
-
-        } catch (Exception e) {
-            System.out.println("\nERROR: There was a problem reading the file.");
-            System.out.println(e);
-            return new ArrayList<>();
-        }
-
-        return users;
-    }
-
     public static void writeToJson(String file, List<User> users) {
-        Path filePath = Paths.get(file);
         StringBuilder jsonString = new StringBuilder();
         jsonString.append("[\n");
         for (User user: users) {
@@ -88,6 +55,7 @@ public class UserManagement {
         jsonString.deleteCharAt(jsonString.length()-2);
         jsonString.append("]");
 
+        Path filePath = Paths.get(file);
         try {
             Files.writeString(filePath, jsonString.toString());
         } catch (Exception e) {
