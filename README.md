@@ -49,7 +49,6 @@ Through this project I aim to practice:
 │   ├── User.java
 │   ├── UserLogin.java (main)
 │   ├── UserManagement.java
-│   ├── users.csv
 │   └── users.json
 ├── .gitignore
 └── README.md
