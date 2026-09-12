@@ -48,7 +48,8 @@ Through this project I aim to practice:
 ├── src
 │   ├── UserLogin.java
 │   ├── User.java
-│   └── users.csv
+│   ├── users.csv
+│   └── users.json
 ├── .gitignore
 └── README.md
 ```
