@@ -34,12 +34,12 @@ Through this project I aim to practice:
 - [X] User login functionality
 - [X] Password hashing
 - [X] Persistent storage using files
-- [ ] User registration functionality
+- [X] User registration functionality
 
 ### Phase 2
-- [ ] Database integration
 - [ ] Password validation
 - [ ] Password reset functionality
+- [ ] Database integration
 
 ## Project Structure
 
