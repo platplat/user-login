@@ -6,36 +6,42 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 public class UserManagement {
-    private List<User> users;
+    private Map<String,User> users;
 
     public UserManagement(String file) {
-        if ( !(file.endsWith("json")) ) {
-            this.users = new ArrayList<>();
-        }
         this.users = readFromJson(file);
     }
 
-    public List<User> getUsers() {
+    public Map<String,User> getUsers() {
+        //return this.users;
         return this.users;
     }
 
     public boolean addUser(String file, String username, String password) {
         User userToAdd = new User(username, getHash(password));
-        if (this.users.add(userToAdd)) {
-            writeToJson(file, users);
-            return true;
+        if (this.users.containsKey(username)) {
+            return false;
         }
-        return false;
+        this.users.put(username, userToAdd);
+        writeToJson(file, users);
+        return true;
     }
 
     public boolean isValidCredentials(String username, String password) {
         // Create a new User with the input username and password
         User inputUser = new User(username, getHash(password));
         
+        // Verify user exists
+        if ( !(this.users.containsKey(username)) ) {
+            return false;
+        }
+
         // Check if username and password are valid credentials
-        if (this.users.contains(inputUser)) {
+        if (this.users.get(username).equals(inputUser)) {
             return true;
         } else {
             return false;
@@ -43,13 +49,13 @@ public class UserManagement {
     }
 
     // Static methods
-    public static void writeToJson(String file, List<User> users) {
+    public static void writeToJson(String file, Map<String,User> users) {
         StringBuilder jsonString = new StringBuilder();
         jsonString.append("[\n");
-        for (User user: users) {
+        for (String username: users.keySet()) {
             jsonString.append("  {\n");
-            jsonString.append("    \"username\": \"" + user.getUsername() + "\",\n");
-            jsonString.append("    \"passwordHash\": \"" + user.getPasswordHash() + "\"\n");
+            jsonString.append("    \"username\": \"" + username + "\",\n");
+            jsonString.append("    \"passwordHash\": \"" + users.get(username).getPasswordHash() + "\"\n");
             jsonString.append("  },\n");
         }
         jsonString.deleteCharAt(jsonString.length()-2);
@@ -63,11 +69,11 @@ public class UserManagement {
         }
     }
 
-    public static List<User> readFromJson(String file) {
+    public static Map<String, User> readFromJson(String file) {
         // Number of property for each user in JSON file
         final int NUMBER_OF_PROPERTIES = 2;
 
-        List<User> users = new ArrayList<>();
+        Map<String,User> users = new HashMap<>();
         try {
             Scanner sc = new Scanner(Paths.get(file));
             List<String> lines = new ArrayList<>();
@@ -90,7 +96,7 @@ public class UserManagement {
                 //System.out.println(passwordHash);
 
                 // Add user to users list
-                users.add(new User(username, passwordHash));
+                users.put(username, new User(username, passwordHash));
             }
         } catch (Exception e) {
             System.out.println(e);

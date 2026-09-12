@@ -4,7 +4,7 @@ public class UserLogin {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // File in which users are stored
+        // JSON file in which users are stored
         final String USERS_FILE = "src/users.json";
 
         UserManagement userManagement = new UserManagement(USERS_FILE);
