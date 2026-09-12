@@ -52,14 +52,24 @@ public class UserLogin {
 
     public static void startRegistration(Scanner sc, UserManagement userManagement) {
         while (true) {
-            // Get user input
+            // Get username from user
             System.out.print("Enter username: ");
             String usernameInput = sc.nextLine();
+
+            // Validate username
+            while (usernameInput.contains("\"") || usernameInput.contains(",")) {
+                System.out.println("Invalid username. Please try again.");
+                System.out.print("Enter username: ");
+                usernameInput = sc.nextLine();
+            }
+            
+            // Get password from user
             System.out.print("Enter password: ");
             String passwordInput = sc.nextLine();
             System.out.print("Confirm password: ");
             String passwordConfirm = sc.nextLine();
 
+            // Confirm password 
             while ( !(passwordInput.equals(passwordConfirm)) ) {
                 System.out.println("Passwords do not match. Please try again.");
                 System.out.print("Enter password: ");
