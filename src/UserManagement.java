@@ -11,9 +11,11 @@ import java.util.HashMap;
 
 public class UserManagement {
     private Map<String,User> users;
+    private String file;
 
     public UserManagement(String file) {
-        this.users = readFromJson(file);
+        this.file = file;
+        this.users = this.readFromJson();
     }
 
     public Map<String,User> getUsers() {
@@ -21,13 +23,13 @@ public class UserManagement {
         return this.users;
     }
 
-    public boolean addUser(String file, String username, String password) {
+    public boolean addUser(String username, String password) {
         User userToAdd = new User(username, getHash(password));
         if (this.users.containsKey(username)) {
             return false;
         }
         this.users.put(username, userToAdd);
-        writeToJson(file, users);
+        this.writeToJson(users);
         return true;
     }
 
@@ -48,8 +50,7 @@ public class UserManagement {
         }
     }
 
-    // Static methods
-    public static void writeToJson(String file, Map<String,User> users) {
+    public void writeToJson(Map<String,User> users) {
         StringBuilder jsonString = new StringBuilder();
         jsonString.append("[\n");
         for (String username: users.keySet()) {
@@ -61,7 +62,7 @@ public class UserManagement {
         jsonString.deleteCharAt(jsonString.length()-2);
         jsonString.append("]");
 
-        Path filePath = Paths.get(file);
+        Path filePath = Paths.get(this.file);
         try {
             Files.writeString(filePath, jsonString.toString());
         } catch (Exception e) {
@@ -69,13 +70,13 @@ public class UserManagement {
         }
     }
 
-    public static Map<String, User> readFromJson(String file) {
+    public Map<String, User> readFromJson() {
         // Number of property for each user in JSON file
         final int NUMBER_OF_PROPERTIES = 2;
 
         Map<String,User> users = new HashMap<>();
         try {
-            Scanner sc = new Scanner(Paths.get(file));
+            Scanner sc = new Scanner(Paths.get(this.file));
             List<String> lines = new ArrayList<>();
             
             while (sc.hasNextLine()) {

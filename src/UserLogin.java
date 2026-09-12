@@ -69,7 +69,7 @@ public class UserLogin {
             }
 
             // Register user
-            if (userManagement.addUser("src/users.json", usernameInput, passwordInput)) {
+            if (userManagement.addUser(usernameInput, passwordInput)) {
                 System.out.println("User registration successful.");
                 break;
             } else {
