@@ -34,7 +34,7 @@ public class UserLogin {
     public static boolean isValidCredentials(String username, String password) throws NoSuchAlgorithmException {
         // Create list of users and load data from csv file
         List<User> users = new ArrayList<>();
-        users = readFromCsv("src/users.csv");
+        users = readFromJson("src/users.json");
         
         // Create a new User with the input username and password
         User inputUser = new User(username, getHash(password));
@@ -95,6 +95,43 @@ public class UserLogin {
             System.out.println("\nERROR: There was a problem reading the file.");
             System.out.println(e);
             return new ArrayList<>();
+        }
+
+        return users;
+    }
+
+
+    public static List<User> readFromJson(String file) {
+        // Number of property for each user in JSON file
+        final int NUMBER_OF_PROPERTIES = 2;
+
+        List<User> users = new ArrayList<>();
+        try {
+            Scanner sc = new Scanner(Paths.get(file));
+            List<String> lines = new ArrayList<>();
+            
+            while (sc.hasNextLine()) {
+                lines.add(sc.nextLine());
+            }
+            sc.close();
+
+            for (int i = 2; i < lines.size()-2; i+=NUMBER_OF_PROPERTIES+2) {
+
+                // Extract and clean username
+                String username = lines.get(i).split(":")[1];
+                username = username.replace("\"", "").replace(",", "").strip();
+                //System.out.println(username);
+
+                // Extract and clean password hash
+                String passwordHash = lines.get(i+1).split(":")[1];
+                passwordHash = passwordHash.replace("\"", "").replace(",", "").strip();
+                //System.out.println(passwordHash);
+
+                // Add user to users list
+                users.add(new User(username, passwordHash));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
         }
 
         return users;
