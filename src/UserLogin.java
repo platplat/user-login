@@ -10,17 +10,20 @@ public class UserLogin {
     public static void main(String[] args) throws NoSuchAlgorithmException {
         Scanner sc = new Scanner(System.in);
 
-        // Get user input
-        System.out.print("Enter username: ");
-        String usernameInput = sc.nextLine();
-        System.out.print("Enter password: ");
-        String passwordInput = sc.nextLine();
+        while (true) {
+            // Get user input
+            System.out.print("Enter username: ");
+            String usernameInput = sc.nextLine();
+            System.out.print("Enter password: ");
+            String passwordInput = sc.nextLine();
 
-        // Login validation
-        if (isValidCredentials(usernameInput, passwordInput)) {
-            System.out.println("Successfully logged in.");
-        } else {
-            System.out.println("Incorrect username/password.");
+            // Login validation
+            if (isValidCredentials(usernameInput, passwordInput)) {
+                System.out.println("Successfully logged in.");
+                break;
+            } else {
+                System.out.println("Incorrect username/password. Please try again.");
+            }
         }
 
         // Close scanner
