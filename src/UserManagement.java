@@ -2,6 +2,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 
@@ -20,6 +22,15 @@ public class UserManagement {
 
     public List<User> getUsers() {
         return this.users;
+    }
+
+    public boolean addUser(String file, String username, String password) {
+        User userToAdd = new User(username, getHash(password));
+        if (this.users.add(userToAdd)) {
+            writeToJson(file, users);
+            return true;
+        }
+        return false;
     }
 
     public boolean isValidCredentials(String username, String password) {
@@ -62,6 +73,26 @@ public class UserManagement {
         }
 
         return users;
+    }
+
+    public static void writeToJson(String file, List<User> users) {
+        Path filePath = Paths.get(file);
+        StringBuilder jsonString = new StringBuilder();
+        jsonString.append("[\n");
+        for (User user: users) {
+            jsonString.append("  {\n");
+            jsonString.append("    \"username\": \"" + user.getUsername() + "\",\n");
+            jsonString.append("    \"passwordHash\": \"" + user.getPasswordHash() + "\"\n");
+            jsonString.append("  },\n");
+        }
+        jsonString.deleteCharAt(jsonString.length()-2);
+        jsonString.append("]");
+
+        try {
+            Files.writeString(filePath, jsonString.toString());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public static List<User> readFromJson(String file) {

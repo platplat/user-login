@@ -4,7 +4,10 @@ public class UserLogin {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        UserManagement userManagement = new UserManagement("src/users.json");
+        // File in which users are stored
+        final String USERS_FILE = "src/users.json";
+
+        UserManagement userManagement = new UserManagement(USERS_FILE);
 
         while (true) {
             // Get user input
