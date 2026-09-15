@@ -66,6 +66,11 @@ public class UserLogin {
             // Get password from user
             System.out.print("Enter password: ");
             String passwordInput = sc.nextLine();
+            while (passwordInput.length() < 8) {
+                System.out.println("Password too short. Please try again.");
+                System.out.print("Enter password: ");
+                passwordInput = sc.nextLine();
+            }
             System.out.print("Confirm password: ");
             String passwordConfirm = sc.nextLine();
 

@@ -33,6 +33,11 @@ public class UserManagement {
         return true;
     }
 
+    public void updateUserPassword(String username, String password) {
+        User user = users.get(username);
+        user.setPasswordHash(getHash(password));
+    }
+
     public boolean isValidCredentials(String username, String password) {
         // Create a new User with the input username and password
         User inputUser = new User(username, getHash(password));

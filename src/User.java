@@ -15,6 +15,10 @@ public class User {
         return this.passwordHash;
     }
 
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
     @Override
     public boolean equals(Object compared) {
         if (this == compared) {
